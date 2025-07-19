@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Nutrição</title>
+    <!-- Inclui o Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Cor de fundo suave */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 32px;
+            border-radius: 12px; /* Cantos arredondados */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave */
+            max-width: 700px;
+            width: 100%;
+            border: 1px solid #e0e0e0;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="tel"],
+        input[type="number"],
+        input[type="time"], /* Adicionado para campos de horário */
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px; /* Cantos arredondados nos inputs */
+            font-size: 16px;
+            color: #555;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        input[type="tel"]:focus,
+        input[type="number"]:focus,
+        input[type="time"]:focus, /* Adicionado para campos de horário */
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #6366f1; /* Cor de foco do Tailwind (indigo-500) */
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 20px;
+            cursor: pointer;
+            font-weight: 400;
+        }
+        .radio-group input[type="radio"], .checkbox-group input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.2); /* Aumenta o tamanho do radio/checkbox */
+        }
+        .section-title {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #4f46e5; /* indigo-600 */
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #6366f1; /* Cor de fundo do botão (indigo-500) */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #4f46e5; /* Cor mais escura no hover (indigo-600) */
+            transform: translateY(-2px); /* Efeito de "levantar" */
+        }
+        /* Estilo para ocultar os grupos de campos inicialmente */
+        .hidden-group {
+            display: none;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto 20px auto; /* Centraliza a imagem e adiciona margem inferior */
+            max-width: 150px; /* Define um tamanho máximo para a logo */
+            height: auto;
+        }
+        .observation-text {
+            font-size: 0.9rem;
+            color: #6b7280; /* gray-500 */
+            margin-top: 10px;
+            font-style: italic;
+            text-align: center;
+        }
+        .age-display {
+            margin-left: 10px;
+            font-weight: 500;
+            color: #4a5568; /* gray-700 */
+        }
+        .meal-details-group {
+            border: 1px solid #e2e8f0; /* gray-200 */
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            background-color: #f8fafc; /* gray-50 */
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <!-- Logomarca adicionada aqui -->
+        <!-- Substitua 'https://placehold.co/150x50/cccccc/333333?text=Sua+Logo' pelo URL da sua logomarca. -->
+        <img src="https://raw.githubusercontent.com/wellingtonsouzapersonal/Formul-rio-de-Anaminese/main/WS%20LOGO%20MARCADA%CC%81GUA.png" alt="Logomarca" class="logo" onerror="this.onerror=null; this.src='https://placehold.co/150x50/cccccc/333333?text=Logo+Não+Encontrada';">
+
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Formulário de Nutrição</h2>
+
+        <!-- ATENÇÃO: Substitua "https://formspree.io/f/SEU_ENDPOINT_DO_FORMSPREE" pelo URL que você copiar do Formspree.io -->
+        <form id="nutricaoForm" action="https://formspree.io/f/xovlvgka" method="POST" class="space-y-6">
+
+            <div class="section-title">Informações Pessoais</div>
+
+            <div class="form-group">
+                <label for="nomeCompleto">Nome completo:</label>
+                <input type="text" id="nomeCompleto" name="nomeCompleto" required class="rounded-lg">
+            </div>
+
+            <div class="form-group flex flex-col sm:flex-row sm:space-x-4">
+                <div class="w-full sm:w-1/2 mb-4 sm:mb-0">
+                    <label for="dataNascimento">Data de nascimento:</label>
+                    <div class="flex items-center">
+                        <input type="date" id="dataNascimento" name="dataNascimento" class="rounded-lg" required>
+                        <span id="idadeCalculada" class="age-display"></span>
+                    </div>
+                </div>
+                <div class="w-full sm:w-1/2">
+                    <label>Gênero:</label>
+                    <div class="radio-group flex mt-2">
+                        <label><input type="radio" name="genero" value="Feminino" required> Feminino</label>
+                        <label><input type="radio" name="genero" value="Masculino"> Masculino</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campos de Altura e Peso agrupados -->
+            <div class="form-group flex flex-col sm:flex-row sm:space-x-4">
+                <div class="w-full sm:w-1/2 mb-4 sm:mb-0">
+                    <label for="altura">Altura (cm):</label>
+                    <input type="number" id="altura" name="altura" min="50" max="300" placeholder="Ex: 175" class="rounded-lg">
+                </div>
+                <div class="w-full sm:w-1/2">
+                    <label for="peso">Peso (kg):</label>
+                    <input type="number" id="peso" name="peso" min="1" max="500" step="0.1" placeholder="Ex: 70.5" class="rounded-lg">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="profissao">Profissão:</label>
+                <input type="text" id="profissao" name="profissao" class="rounded-lg">
+            </div>
+
+            <div class="section-title">Histórico de Saúde</div>
+
+            <div class="form-group">
+                <label>Possui alguma doença crônica (Diabetes, Hipertensão, Tireoide, etc.)?</label>
+                <div class="radio-group flex mt-2">
+                    <label><input type="radio" name="doencaCronicaNutricao" value="Sim" required> Sim</label>
+                    <label><input type="radio" name="doencaCronicaNutricao" value="Não"> Não</label>
+                </div>
+                <div id="doencaCronicaNutricaoDetalhes" class="hidden-group">
+                    <label for="qualDoencaCronicaNutricao" class="mt-2">Qual(is) doença(s)?</label>
+                    <textarea id="qualDoencaCronicaNutricao" name="qualDoencaCronicaNutricao" rows="2" class="rounded-lg"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Possui alergia ou intolerância alimentar?</label>
+                <div class="radio-group flex mt-2">
+                    <label><input type="radio" name="alergiaIntolerancia" value="Sim" required> Sim</label>
+                    <label><input type="radio" name="alergiaIntolerancia" value="Não"> Não</label>
+                </div>
+                <div id="alergiaIntoleranciaDetalhes" class="hidden-group">
+                    <label for="qualAlergiaIntolerancia" class="mt-2">Qual(is)?</label>
+                    <textarea id="qualAlergiaIntolerancia" name="qualAlergiaIntolerancia" rows="2" class="rounded-lg"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Possui problemas gastrointestinais (azia, refluxo, prisão de ventre, etc.)?</label>
+                <div class="radio-group flex mt-2">
+                    <label><input type="radio" name="problemasGastrointestinais" value="Sim" required> Sim</label>
+                    <label><input type="radio" name="problemasGastrointestinais" value="Não"> Não</label>
+                </div>
+                <div id="problemasGastrointestinaisDetalhes" class="hidden-group">
+                    <label for="qualProblemaGastrointestinal" class="mt-2">Qual(is)?</label>
+                    <textarea id="qualProblemaGastrointestinal" name="qualProblemaGastrointestinal" rows="2" class="rounded-lg"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Faz uso de alguma medicação contínua que possa afetar a alimentação?</label>
+                <div class="radio-group flex mt-2">
+                    <label><input type="radio" name="medicaoContinuaNutricao" value="Sim" required> Sim</label>
+                    <label><input type="radio" name="medicaoContinuaNutricao" value="Não"> Não</label>
+                </div>
+                <div id="medicaoContinuaNutricaoDetalhes" class="hidden-group">
+                    <label for="qualMedicacaoNutricao" class="mt-2">Qual(is) medicamento(s)?</label>
+                    <textarea id="qualMedicacaoNutricao" name="qualMedicacaoNutricao" rows="2" class="rounded-lg"></textarea>
+                </div>
+            </div>
+
+            <div class="section-title">Hábitos Alimentares</div>
+
+            <div class="form-group">
+                <label>Quais refeições você costuma fazer e o que come?</label>
+                <div class="checkbox-group flex flex-col mt-2 space-y-2">
+                    <!-- Café da Manhã -->
+                    <label>
+                        <input type="checkbox" id="refeicaoCafeManha" name="refeicaoCafeManha" value="Sim"> Café da manhã
+                    </label>
+                    <div id="detalhesCafeManha" class="hidden-group meal-details-group">
+                        <label for="horarioCafeManha" class="text-sm font-medium text-gray-700">Horário:</label>
+                        <input type="time" id="horarioCafeManha" name="horarioCafeManha" class="rounded-lg mb-2">
+                        <label for="alimentoCafeManha" class="text-sm font-medium text-gray-700">Tipo de alimento:</label>
+                        <textarea id="alimentoCafeManha" name="alimentoCafeManha" rows="2" class="rounded-lg"></textarea>
+                    </div>
+
+                    <!-- Lanche da Manhã -->
+                    <label>
+                        <input type="checkbox" id="refeicaoLancheManha" name="refeicaoLancheManha" value="Sim"> Lanche da manhã
+                    </label>
+                    <div id="detalhesLancheManha" class="hidden-group meal-details-group">
+                        <label for="horarioLancheManha" class="text-sm font-medium text-gray-700">Horário:</label>
+                        <input type="time" id="horarioLancheManha" name="horarioLancheManha" class="rounded-lg mb-2">
+                        <label for="alimentoLancheManha" class="text-sm font-medium text-gray-700">Tipo de alimento:</label>
+                        <textarea id="alimentoLancheManha" name="alimentoLancheManha" rows="2" class="rounded-lg"></textarea>
+                    </div>
+
+                    <!-- Almoço -->
+                    <label>
+                        <input type="checkbox" id="refeicaoAlmoco" name="refeicaoAlmoco" value="Sim"> Almoço
+                    </label>
+                    <div id="detalhesAlmoco" class="hidden-group meal-details-group">
+                        <label for="horarioAlmoco" class="text-sm font-medium text-gray-700">Horário:</label>
+                        <input type="time" id="horarioAlmoco" name="horarioAlmoco" class="rounded-lg mb-2">
+                        <label for="alimentoAlmoco" class="text-sm font-medium text-gray-700">Tipo de alimento:</label>
+                        <textarea id="alimentoAlmoco" name="alimentoAlmoco" rows="2" class="rounded-lg"></textarea>
+                    </div>
+
+                    <!-- Lanche da Tarde -->
+                    <label>
+                        <input type="checkbox" id="refeicaoLancheTarde" name="refeicaoLancheTarde" value="Sim"> Lanche da tarde
+                    </label>
+                    <div id="detalhesLancheTarde" class="hidden-group meal-details-group">
+                        <label for="horarioLancheTarde" class="text-sm font-medium text-gray-700">Horário:</label>
+                        <input type="time" id="horarioLancheTarde" name="horarioLancheTarde" class="rounded-lg mb-2">
+                        <label for="alimentoLancheTarde" class="text-sm font-medium text-gray-700">Tipo de alimento:</label>
+                        <textarea id="alimentoLancheTarde" name="alimentoLancheTarde" rows="2" class="rounded-lg"></textarea>
+                    </div>
+
+                    <!-- Café da Tarde -->
+                    <label>
+                        <input type="checkbox" id="refeicaoCafeTarde" name="refeicaoCafeTarde" value="Sim"> Café da tarde
+                    </label>
+                    <div id="detalhesCafeTarde" class="hidden-group meal-details-group">
+                        <label for="horarioCafeTarde" class="text-sm font-medium text-gray-700">Horário:</label>
+                        <input type="time" id="horarioCafeTarde" name="horarioCafeTarde" class="rounded-lg mb-2">
+                        <label for="alimentoCafeTarde" class="text-sm font-medium text-gray-700">Tipo de alimento:</label>
+                        <textarea id="alimentoCafeTarde" name="alimentoCafeTarde" rows="2" class="rounded-lg"></textarea>
+                    </div>
+
+                    <!-- Jantar -->
+                    <label>
+                        <input type="checkbox" id="refeicaoJantar" name="refeicaoJantar" value="Sim"> Jantar
+                    </label>
+                    <div id="detalhesJantar" class="hidden-group meal-details-group">
+                        <label for="horarioJantar" class="text-sm font-medium text-gray-700">Horário:</label>
+                        <input type="time" id="horarioJantar" name="horarioJantar" class="rounded-lg mb-2">
+                        <label for="alimentoJantar" class="text-sm font-medium text-gray-700">Tipo de alimento:</label>
+                        <textarea id="alimentoJantar" name="alimentoJantar" rows="2" class="rounded-lg"></textarea>
+                    </div>
+
+                    <!-- Ceia -->
+                    <label>
+                        <input type="checkbox" id="refeicaoCeia" name="refeicaoCeia" value="Sim"> Ceia
+                    </label>
+                    <div id="detalhesCeia" class="hidden-group meal-details-group">
+                        <label for="horarioCeia" class="text-sm font-medium text-gray-700">Horário:</label>
+                        <input type="time" id="horarioCeia" name="horarioCeia" class="rounded-lg mb-2">
+                        <label for="alimentoCeia" class="text-sm font-medium text-gray-700">Tipo de alimento:</label>
+                        <textarea id="alimentoCeia" name="alimentoCeia" rows="2" class="rounded-lg"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="consumoAgua">Qual sua ingestão de água diária (aproximadamente)?</label>
+                <input type="text" id="consumoAgua" name="consumoAgua" placeholder="Ex: 8 copos / 2 litros" class="rounded-lg" required>
+            </div>
+
+            <div class="form-group">
+                <label>Você tem alguma restrição alimentar específica (vegetariano, vegano, sem glúten, etc.)?</label>
+                <div class="radio-group flex mt-2">
+                    <label><input type="radio" name="restricaoAlimentar" value="Sim" required> Sim</label>
+                    <label><input type="radio" name="restricaoAlimentar" value="Não"> Não</label>
+                </div>
+                <div id="restricaoAlimentarDetalhes" class="hidden-group">
+                    <label for="qualRestricaoAlimentar" class="mt-2">Qual(is)?</label>
+                    <textarea id="qualRestricaoAlimentar" name="qualRestricaoAlimentar" rows="2" class="rounded-lg"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Faz uso de suplementos alimentares?</label>
+                <div class="radio-group flex mt-2">
+                    <label><input type="radio" name="usoSuplementos" value="Sim" required> Sim</label>
+                    <label><input type="radio" name="usoSuplementos" value="Não"> Não</label>
+                </div>
+                <div id="usoSuplementosDetalhes" class="hidden-group">
+                    <label for="quaisSuplementos" class="mt-2">Qual(is)?</label>
+                    <textarea id="quaisSuplementos" name="quaisSuplementos" rows="2" class="rounded-lg"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Nível de estresse (como afeta sua alimentação)?</label>
+                <select id="nivelEstresseNutricao" name="nivelEstresseNutricao" class="rounded-lg" required>
+                    <option value="">Selecione</option>
+                    <option value="Baixo">Baixo (Não afeta significativamente)</option>
+                    <option value="Medio">Médio (Afeta ocasionalmente, comendo mais ou menos)</option>
+                    <option value="Alto">Alto (Afeta frequentemente, comendo por ansiedade/estresse)</option>
+                </select>
+            </div>
+
+            <div class="section-title">Objetivos Nutricionais</div>
+
+            <div class="form-group">
+                <label>Qual seu principal objetivo com a alimentação? (Pode marcar mais de um)</label>
+                <div class="checkbox-group flex flex-col mt-2 space-y-2">
+                    <label><input type="checkbox" name="objetivosNutricionais" value="Perda de Peso / Gordura"> Perda de Peso / Gordura</label>
+                    <label><input type="checkbox" name="objetivosNutricionais" value="Ganho de Massa Muscular"> Ganho de Massa Muscular</label>
+                    <label><input type="checkbox" name="objetivosNutricionais" value="Melhora da Saude Geral"> Melhora da Saúde Geral e Bem-estar</label>
+                    <label><input type="checkbox" name="objetivosNutricionais" value="Aumento de Energia"> Aumento de Energia e Disposição</label>
+                    <label><input type="checkbox" name="objetivosNutricionais" value="Melhora da Performance Esportiva"> Melhora da Performance Esportiva</label>
+                    <label><input type="checkbox" name="objetivosNutricionais" value="Educacao Alimentar"> Educação Alimentar e Hábitos Saudáveis</label>
+                    <label><input type="checkbox" name="objetivosNutricionais" value="Outro"> Outro:</label>
+                    <div id="objetivosNutricionaisOutroDetalhes" class="hidden-group">
+                        <textarea id="objetivosNutricionaisOutro" name="objetivosNutricionaisOutro" rows="2" class="rounded-lg mt-2" placeholder="Especifique outros objetivos"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="informacoesAdicionaisNutricao">Há algo mais que você gostaria de nos informar sobre sua alimentação ou saúde?</label>
+                <textarea id="informacoesAdicionaisNutricao" name="informacoesAdicionaisNutricao" rows="4" class="rounded-lg"></textarea>
+            </div>
+
+            <!-- Botão de Enviar -->
+            <button type="submit">Enviar Formulário de Nutrição</button>
+        </form>
+    </div>
+
+    <script>
+        // Função para calcular a idade a partir da data de nascimento
+        function calcularIdade(dataNascimento) {
+            const hoje = new Date();
+            const dataNasc = new Date(dataNascimento);
+            let idade = hoje.getFullYear() - dataNasc.getFullYear();
+            const mes = hoje.getMonth() - dataNasc.getMonth();
+            if (mes < 0 || (mes === 0 && hoje.getDate() < dataNasc.getDate())) {
+                idade--;
+            }
+            return idade;
+        }
+
+        // Elementos para cálculo de idade
+        const dataNascimentoInput = document.getElementById('dataNascimento');
+        const idadeCalculadaSpan = document.getElementById('idadeCalculada');
+
+        // Adiciona um listener para o evento 'input' no campo de data de nascimento
+        dataNascimentoInput.addEventListener('input', function() {
+            const dataNascValue = this.value;
+            if (dataNascValue) {
+                const idade = calcularIdade(dataNascValue);
+                idadeCalculadaSpan.textContent = `(${idade} anos)`;
+            } else {
+                idadeCalculadaSpan.textContent = ''; // Limpa se a data for removida
+            }
+        });
+
+        // Função genérica para alternar a visibilidade de um grupo de detalhes (para radio buttons e checkbox "Outro")
+        function toggleDetails(radioGroupName, detailsId, conditionValue = 'Sim', checkboxId = null) {
+            const radios = document.querySelectorAll(`input[name="${radioGroupName}"]`);
+            const detailsGroup = document.getElementById(detailsId);
+            const checkbox = checkboxId ? document.getElementById(checkboxId) : null;
+
+            if (!detailsGroup) return;
+
+            function updateVisibility() {
+                let isConditionMet = false;
+                if (radios.length > 0) {
+                    radios.forEach(radio => {
+                        if (radio.checked && radio.value === conditionValue) {
+                            isConditionMet = true;
+                        }
+                    });
+                } else if (checkbox) {
+                    if (checkbox.checked) {
+                        isConditionMet = true;
+                    }
+                }
+
+                if (isConditionMet) {
+                    detailsGroup.classList.remove('hidden-group');
+                    detailsGroup.querySelectorAll('input, textarea, select').forEach(input => {
+                        if (input.type !== 'radio' && input.type !== 'checkbox') {
+                            input.setAttribute('required', 'required');
+                        }
+                    });
+                } else {
+                    detailsGroup.classList.add('hidden-group');
+                    detailsGroup.querySelectorAll('input, textarea, select').forEach(input => {
+                        input.removeAttribute('required');
+                        if (input.type === 'radio' || input.type === 'checkbox') {
+                            input.checked = false;
+                        } else {
+                            input.value = '';
+                        }
+                    });
+                }
+            }
+
+            if (radios.length > 0) {
+                radios.forEach(radio => {
+                    radio.addEventListener('change', updateVisibility);
+                });
+            } else if (checkbox) {
+                checkbox.addEventListener('change', updateVisibility);
+            }
+            
+            updateVisibility(); // Inicializa o estado ao carregar a página
+        }
+
+        // Nova função para alternar a visibilidade dos detalhes de cada refeição
+        function toggleMealDetails(checkboxId, detailsGroupId) {
+            const checkbox = document.getElementById(checkboxId);
+            const detailsGroup = document.getElementById(detailsGroupId);
+            if (!checkbox || !detailsGroup) return;
+
+            function updateMealVisibility() {
+                if (checkbox.checked) {
+                    detailsGroup.classList.remove('hidden-group');
+                    detailsGroup.querySelectorAll('input, textarea').forEach(input => {
+                        input.setAttribute('required', 'required');
+                    });
+                } else {
+                    detailsGroup.classList.add('hidden-group');
+                    detailsGroup.querySelectorAll('input, textarea').forEach(input => {
+                        input.removeAttribute('required');
+                        input.value = ''; // Limpa os campos quando ocultados
+                    });
+                }
+            }
+
+            checkbox.addEventListener('change', updateMealVisibility);
+            updateMealVisibility(); // Inicializa o estado
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Desmarcar todas as opções de rádio e checkbox ao carregar a página
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(input => {
+                input.checked = false;
+            });
+
+            // Ocultar e limpar todos os campos de detalhes dinâmicos
+            document.querySelectorAll('.hidden-group').forEach(group => {
+                group.classList.add('hidden-group');
+                group.querySelectorAll('input, textarea, select').forEach(input => {
+                    input.removeAttribute('required');
+                    if (input.type === 'radio' || input.type === 'checkbox') {
+                        input.checked = false;
+                    } else {
+                        input.value = '';
+                    }
+                });
+            });
+
+            // Chamadas para cada grupo de campos de saúde e hábitos gerais
+            toggleDetails('doencaCronicaNutricao', 'doencaCronicaNutricaoDetalhes');
+            toggleDetails('alergiaIntolerancia', 'alergiaIntoleranciaDetalhes');
+            toggleDetails('problemasGastrointestinais', 'problemasGastrointestinaisDetalhes');
+            toggleDetails('medicaoContinuaNutricao', 'medicaoContinuaNutricaoDetalhes');
+            toggleDetails('restricaoAlimentar', 'restricaoAlimentarDetalhes');
+            toggleDetails('usoSuplementos', 'usoSuplementosDetalhes');
+            toggleDetails('objetivosNutricionais', 'objetivosNutricionaisOutroDetalhes', 'Sim', 'objetivosNutricionaisOutro'); // Para o checkbox "Outro"
+
+            // Chamadas para os novos campos de refeição
+            toggleMealDetails('refeicaoCafeManha', 'detalhesCafeManha');
+            toggleMealDetails('refeicaoLancheManha', 'detalhesLancheManha');
+            toggleMealDetails('refeicaoAlmoco', 'detalhesAlmoco');
+            toggleMealDetails('refeicaoLancheTarde', 'detalhesLancheTarde');
+            toggleMealDetails('refeicaoCafeTarde', 'detalhesCafeTarde');
+            toggleMealDetails('refeicaoJantar', 'detalhesJantar');
+            toggleMealDetails('refeicaoCeia', 'detalhesCeia');
+
+
+            // Inicializa o cálculo da idade caso já haja uma data preenchida (ex: ao recarregar a página com dados do navegador)
+            if (dataNascimentoInput.value) {
+                dataNascimentoInput.dispatchEvent(new Event('input'));
+            }
+        });
+    </script>
+</body>
+</html>
